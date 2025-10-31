@@ -11,3 +11,10 @@ Projet C# (+ Entity Framework et Postgre)
 - Gestion des clients et des voitures
 - Affichage des voitures disponibles et vendues
 
+## Affichage
+1) Voir liste voiture
+2) Historique d'achat (croissant)
+3) Ajouter un client
+4) Ajouter une voiture
+5) Faire un achat de voiture
+6) Fin
