@@ -4,10 +4,13 @@ namespace projetFinal.Data;
 
 public class CSVService
 {
+    // Lecture du CSV des voitures
     public List<Car> ReadCars(string path)
     {
         var cars = new List<Car>();
-        foreach (var line in File.ReadAllLines(path).Skip(1))
+        var lines = File.ReadAllLines(path).Skip(1); // Skip l’en-tête
+
+        foreach (var line in lines)
         {
             var values = line.Split('/');
             cars.Add(new Car
@@ -20,13 +23,17 @@ public class CSVService
                 Sold = bool.Parse(values[5])
             });
         }
+
         return cars;
     }
 
+    // Lecture du CSV des clients
     public List<Client> ReadClients(string path)
     {
         var clients = new List<Client>();
-        foreach (var line in File.ReadAllLines(path).Skip(1))
+        var lines = File.ReadAllLines(path).Skip(1);
+
+        foreach (var line in lines)
         {
             var values = line.Split('%');
             clients.Add(new Client
@@ -38,6 +45,7 @@ public class CSVService
                 Email = values[4]
             });
         }
+
         return clients;
     }
 }

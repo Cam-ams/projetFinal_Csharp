@@ -1,29 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace projetFinal.Models;
 
 public class Client
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; } = new Guid();
 
-    [Required]
+    [Required] 
     private string lastName;
-
-    [Required]
+    [Required] 
     private string firstName;
-
-    [Required]
+    [Required] 
     private DateTime birthDate;
-
-    [Required]
+    [Required] 
     private string phoneNumber;
-
-    [Required]
+    [Required] 
     private string email;
 
-    // --- Propriétés ---
+    // Propriétés
     public string LastName
     {
         get => lastName;
@@ -54,7 +49,7 @@ public class Client
         set => email = value ?? throw new ArgumentNullException(nameof(value));
     }
 
-    // --- Relations ---
+    // Relations autres tables 
     public List<Car> Cars { get; set; } = new();
-    public List<Achat> Achats { get; set; } = new();
+    public List<Achat> Achats { get; set; } = new(); 
 }
