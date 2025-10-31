@@ -1,5 +1,5 @@
 # Gestion de concession
-Projet C# (+ Entity Framework Core et PostgreSQL)
+Projet C# (+ Entity Framework et Postgre)
 
 ## Consignes
 
@@ -10,3 +10,4 @@ Projet C# (+ Entity Framework Core et PostgreSQL)
 - Calcul du prix TTC à partir du prix HT
 - Gestion des clients et des voitures
 - Affichage des voitures disponibles et vendues
+
