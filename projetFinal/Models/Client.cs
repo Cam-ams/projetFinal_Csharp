@@ -1,28 +1,34 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace projetFinal.Models;
 
 public class Client
 {
     [Key]
-    public Guid Id { get; set; } = new Guid();
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
-    private String firstName;
-    
+    private string lastName;
+
     [Required]
-    private String lastName;
-    
+    private string firstName;
+
     [Required]
-    private DateTime brirthDate;
-    
+    private DateTime birthDate;
+
     [Required]
-    private int phoneNumber;
-    
+    private string phoneNumber;
+
     [Required]
-    private String email;
-    
-    
+    private string email;
+
+    // --- Propriétés ---
+    public string LastName
+    {
+        get => lastName;
+        set => lastName = value ?? throw new ArgumentNullException(nameof(value));
+    }
 
     public string FirstName
     {
@@ -30,22 +36,16 @@ public class Client
         set => firstName = value ?? throw new ArgumentNullException(nameof(value));
     }
 
-    public string LastName
+    public DateTime BirthDate
     {
-        get => lastName;
-        set => lastName = value ?? throw new ArgumentNullException(nameof(value));
+        get => birthDate;
+        set => birthDate = value;
     }
 
-    public DateTime BrirthDate
-    {
-        get => brirthDate;
-        set => brirthDate = value;
-    }
-
-    public int PhoneNumber
+    public string PhoneNumber
     {
         get => phoneNumber;
-        set => phoneNumber = value;
+        set => phoneNumber = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     public string Email
@@ -53,5 +53,8 @@ public class Client
         get => email;
         set => email = value ?? throw new ArgumentNullException(nameof(value));
     }
+
+    // --- Relations ---
+    public List<Car> Cars { get; set; } = new();
+    public List<Achat> Achats { get; set; } = new();
 }
-//Nom%Prénom%Date de naissance%Téléphone%Email

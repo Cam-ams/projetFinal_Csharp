@@ -1,47 +1,31 @@
-﻿using projetFinal.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-
-namespace projetFinal;
-
-
-public class AppDbContext : DbContext
+namespace projetFinal.Models
 {
-    public DbSet<Car> Cars { get; set; }
-    public DbSet<Client> Clients { get; set; }
-    public DbSet<Concession> Concessions { get; set; }
-
-    public AppDbContext(DbContextOptions<AppDbContext> options)
+    public class AppDbContext : DbContext
     {
-    }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Achat> Achats { get; set; }
+        public DbSet<Concession> Concessions { get; set; }
 
-    public AppDbContext()
-    {
-    }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Concession>()
-            .HasMany(c => c.Cars)
-            .WithOne()
-            .OnDelete(DeleteBehavior.Cascade);
-    }
+        public AppDbContext() { }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile(@"C:\\Users\\Cam\\Desktop\\SDV\\B2\\projetFinal\\projetFinal\\appsettings.json")
-            .Build();
-
-        if (!optionsBuilder.IsConfigured)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
-        }
+            if (!optionsBuilder.IsConfigured)
+            {
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
 
-        optionsBuilder.UseNpgsql(""); //chemin du postgre
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseNpgsql(connectionString);
+            }
+        }
     }
-    
 }

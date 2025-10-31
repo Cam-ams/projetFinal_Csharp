@@ -1,31 +1,33 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace projetFinal.Models;
 
 public class Car
 {
-   [Key]
-    public Guid Id { get; set; } = new Guid();
-   
-   [Required]
-    private String brand ;
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid(); // Actuellement new Guid()
 
-   [Required] 
-   private String model;
+    [Required] 
+    public string brand;
 
-   [Required] 
-   private int year;
+    [Required] 
+    public string model;
 
-   [Required]
-   private float priceHT;
+    [Required] 
+    public int year;
 
-   [Required] 
-   private string color;
+    [Required] 
+    private decimal priceHT;
 
-   [Required] 
-   private Boolean sold;
+    [Required] 
+    private string color;
 
-   public float PriceTTC => PriceHT * 1.2f;
+    [Required] 
+    private bool sold;
+
+    public decimal PriceTTC => priceHT * 1.20m;
+
    
    
    
@@ -46,14 +48,13 @@ public class Car
            get => year;
            set => year = value;
        }
-    
-       public float PriceHT
+
+       public decimal PriceHT
        {
            get => priceHT;
            set => priceHT = value;
        }
-       
-    
+
        public string Color
        {
            get => color;
@@ -66,12 +67,7 @@ public class Car
            set => sold = value;
        }
        
-       // Relations A MODIF PLUS TARD
-       public int? ClientId { get; set; }
+       // Relations
+       public Guid? ClientId { get; set; }
        public Client? Client { get; set; }
- 
-       public int ConcessionId { get; set; }
-       public Concession Concession { get; set; }
-       
 }
-

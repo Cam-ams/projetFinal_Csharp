@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Cam\\Desktop\\SDV\\B2\\projetFinal\\projetFinal\\projetFinal.csproj": {}
+    "C:\\Users\\Manon ROUSSELIERE\\Documents\\Sup de Vinci\\B2\\C#\\Final\\projetFinal_Csharp\\projetFinal\\projetFinal.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Cam\\Desktop\\SDV\\B2\\projetFinal\\projetFinal\\projetFinal.csproj": {
+    "C:\\Users\\Manon ROUSSELIERE\\Documents\\Sup de Vinci\\B2\\C#\\Final\\projetFinal_Csharp\\projetFinal\\projetFinal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Cam\\Desktop\\SDV\\B2\\projetFinal\\projetFinal\\projetFinal.csproj",
+        "projectUniqueName": "C:\\Users\\Manon ROUSSELIERE\\Documents\\Sup de Vinci\\B2\\C#\\Final\\projetFinal_Csharp\\projetFinal\\projetFinal.csproj",
         "projectName": "projetFinal",
-        "projectPath": "C:\\Users\\Cam\\Desktop\\SDV\\B2\\projetFinal\\projetFinal\\projetFinal.csproj",
-        "packagesPath": "C:\\Users\\Cam\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Cam\\Desktop\\SDV\\B2\\projetFinal\\projetFinal\\obj\\",
+        "projectPath": "C:\\Users\\Manon ROUSSELIERE\\Documents\\Sup de Vinci\\B2\\C#\\Final\\projetFinal_Csharp\\projetFinal\\projetFinal.csproj",
+        "packagesPath": "C:\\Users\\Manon ROUSSELIERE\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Manon ROUSSELIERE\\Documents\\Sup de Vinci\\B2\\C#\\Final\\projetFinal_Csharp\\projetFinal\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Cam\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Manon ROUSSELIERE\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -43,6 +43,26 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.12, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[10.0.0-rc.2.25502.107, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
