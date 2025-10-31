@@ -1,73 +1,67 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿﻿using System.ComponentModel.DataAnnotations;
 
 namespace projetFinal.Models;
 
 public class Car
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid(); // Actuellement new Guid()
+    public Guid Id { get; set; } = new Guid();
 
     [Required] 
-    public string brand;
-
+    private string brand;
     [Required] 
-    public string model;
-
+    private string model;
     [Required] 
-    public int year;
-
+    private int year;
     [Required] 
     private decimal priceHT;
-
     [Required] 
     private string color;
-
     [Required] 
     private bool sold;
 
+    // Calcul prix TTC avec le prix HT
     public decimal PriceTTC => priceHT * 1.20m;
 
-   
-   
-   
-   public string Brand
-       {
-           get => brand;
-           set => brand = value ?? throw new ArgumentNullException(nameof(value));
-       }
-    
-       public string Model
-       {
-           get => model;
-           set => model = value ?? throw new ArgumentNullException(nameof(value));
-       }
-    
-       public int Year
-       {
-           get => year;
-           set => year = value;
-       }
+    // Propriétés
+    public string Brand
+    {
+        get => brand;
+        set => brand = value ?? throw new ArgumentNullException(nameof(value));
+    }
 
-       public decimal PriceHT
-       {
-           get => priceHT;
-           set => priceHT = value;
-       }
+    public string Model
+    {
+        get => model;
+        set => model = value ?? throw new ArgumentNullException(nameof(value));
+    }
 
-       public string Color
-       {
-           get => color;
-           set => color = value ?? throw new ArgumentNullException(nameof(value));
-       }
-    
-       public bool Sold
-       {
-           get => sold;
-           set => sold = value;
-       }
-       
-       // Relations
-       public Guid? ClientId { get; set; }
-       public Client? Client { get; set; }
+    public int Year
+    {
+        get => year;
+        set => year = value;
+    }
+
+    public decimal PriceHT
+    {
+        get => priceHT;
+        set => priceHT = value;
+    }
+
+    public string Color
+    {
+        get => color;
+        set => color = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
+    public bool Sold
+    {
+        get => sold;
+        set => sold = value;
+    }
+
+    // Relation avec client
+    public Guid? ClientId { get; set; }
+    public Client? Client { get; set; }
 }
+

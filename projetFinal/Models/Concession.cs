@@ -1,23 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace projetFinal.Models;
 
 public class Concession
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; } = new Guid();
 
-    [Required]
+    [Required] 
     private string name;
-
-    [Required]
+    [Required] 
     private string address;
-
-    [Required]
+    [Required] 
     private string phoneNumber;
 
-    // --- Propriétés ---
+    // Propriétés
     public string Name
     {
         get => name;
@@ -35,7 +32,7 @@ public class Concession
         get => phoneNumber;
         set => phoneNumber = value ?? throw new ArgumentNullException(nameof(value));
     }
-
-    // --- Relations ---
+    
+    // Liste des voitures
     public List<Car> Cars { get; set; } = new();
 }

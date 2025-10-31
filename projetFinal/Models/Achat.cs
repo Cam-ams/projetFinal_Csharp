@@ -1,29 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace projetFinal.Models;
 
 public class Achat
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; } = new Guid();
 
-    [Required]
+    [Required] 
     private DateTime dateAchat;
 
-    // --- Propriétés ---
     public DateTime DateAchat
     {
         get => dateAchat;
         set => dateAchat = value;
     }
 
-    // --- Relations ---
-    [Required]
+    // Relations pour achat devant mise en lien CLIENT - VOITURE
+    [Required] 
     public Guid ClientId { get; set; }
     public Client Acheteur { get; set; }
 
-    [Required]
+    [Required] 
     public Guid CarId { get; set; }
     public Car VoitureVendue { get; set; }
 }
