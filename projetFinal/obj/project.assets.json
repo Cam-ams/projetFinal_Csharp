@@ -2235,19 +2235,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Manon ROUSSELIERE\\.nuget\\packages\\": {}
+    "C:\\Users\\Cam\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Manon ROUSSELIERE\\Documents\\Sup de Vinci\\B2\\C#\\Final\\projetFinal_Csharp\\projetFinal\\projetFinal.csproj",
+      "projectUniqueName": "C:\\Users\\Cam\\RiderProjects\\projetFinal_Csharp\\projetFinal\\projetFinal.csproj",
       "projectName": "projetFinal",
-      "projectPath": "C:\\Users\\Manon ROUSSELIERE\\Documents\\Sup de Vinci\\B2\\C#\\Final\\projetFinal_Csharp\\projetFinal\\projetFinal.csproj",
-      "packagesPath": "C:\\Users\\Manon ROUSSELIERE\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Manon ROUSSELIERE\\Documents\\Sup de Vinci\\B2\\C#\\Final\\projetFinal_Csharp\\projetFinal\\obj\\",
+      "projectPath": "C:\\Users\\Cam\\RiderProjects\\projetFinal_Csharp\\projetFinal\\projetFinal.csproj",
+      "packagesPath": "C:\\Users\\Cam\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Cam\\RiderProjects\\projetFinal_Csharp\\projetFinal\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Manon ROUSSELIERE\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Cam\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"

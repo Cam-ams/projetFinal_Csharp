@@ -1,4 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
+using System.Drawing;
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +10,7 @@ using projetFinal.Data;
 using projetFinal.Models;
 
 #region lancement services
+
 
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -32,6 +36,54 @@ var dbConnection = scope.ServiceProvider.GetRequiredService<DbConnection>();
 
 #endregion
 
+db.Database.Migrate();
+
+String pathCar = $"/Data/voitures.csv";
+
+string[] lignesCar = File.ReadAllLines(pathCar);
+
+for (int i = 1; i < lignesCar.Length; i++) // On commence à 1 pour sauter l'en-tête
+{
+    string line = lignesCar[i];
+    string[] values = line.Split('/');
+
+    Car car= new Car
+    {
+        Brand = values[0],
+        Model = values[1],
+        Year =  int.Parse(values[2]), 
+        PriceHT = Convert.ToDecimal(values[3],CultureInfo.InvariantCulture),
+        Color = values[4],
+        Sold = Convert.ToBoolean(values[5])
+    };
+    
+    db.Cars.Add(car); 
+}
+db.SaveChanges();
+
+
+String pathClient = $"{pathProject}/Data/clients.csv"; //pathProject a modifié
+var lignesCustomer = File.ReadAllLines(pathClient);
+
+for (int i = 1; i < lignesCustomer.Length; i++) 
+{
+    string line = lignesCustomer[i];
+    string[] values = line.Split('%');
+
+    Client customer = new Client()
+    {
+        LastName = values[0],
+        FirstName = values[1],
+        BirthDate= Convert.ToDateTime(values[2]),
+        PhoneNumber = values[3],
+        Email = values[4]
+    };
+   db.Clients.Add(customer);
+} 
+
+DbConnection dbConnectionService = scope.ServiceProvider.GetRequiredService<DbConnection>();
+
+
 #region Menu principal
 
 int choice;
@@ -53,16 +105,16 @@ do
     {
         // Redirection
         case 1:
-            dbConnection.AfficherVoitures();
+            dbConnection.PrintCar();
             break;
         case 2:
-            dbConnection.AfficherHistoriqueAchats();
+            dbConnection.showCarBuy();
             break;
         case 3:
-            dbConnection.AjouterClient();
+            dbConnection.addClient();
             break;
         case 4:
-            dbConnection.AjouterVoiture();
+            dbConnection.userAddCar();
             break;
         case 5:
             dbConnection.FaireAchat();

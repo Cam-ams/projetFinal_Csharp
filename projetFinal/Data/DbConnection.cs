@@ -13,7 +13,7 @@ public class DbConnection
     }
 
     // Affiche voitures et proprios (info figurants dans les csv)
-    public void AfficherVoitures()
+    public void PrintCar()
     {
         Console.WriteLine("Liste des voitures :");
 
@@ -28,7 +28,7 @@ public class DbConnection
     }
 
     // Affiche historique des achats dans ordre croissant des dates d'achat
-    public void AfficherHistoriqueAchats()
+    public void showCarBuy()
     {
         Console.WriteLine("Historique des achats :");
 
@@ -43,12 +43,13 @@ public class DbConnection
     }
 
     // ajoute un client dans la base de données 
-    public void AjouterClient()
+    public void addClient()
     {
         Console.Write("Nom : "); string nom = Console.ReadLine();
         Console.Write("Prénom : "); string prenom = Console.ReadLine();
         Console.Write("Email : "); string email = Console.ReadLine();
-        Console.Write("Date de naissance (au format année, mois, date) : "); DateTime naissance = DateTime.Parse(Console.ReadLine());
+        Console.Write("Date de naissance (au format année, mois, date) : ");
+        DateTime naissance = DateTime.SpecifyKind(DateTime.Parse(Console.ReadLine()), DateTimeKind.Utc);
         Console.Write("Téléphone : "); string tel = Console.ReadLine();
 
         var client = new Client
@@ -67,7 +68,7 @@ public class DbConnection
     }
 
     // ajoute une voiture dans la base de données 
-    public void AjouterVoiture()
+    public void userAddCar()
     {
         Console.Write("Marque : "); string marque = Console.ReadLine();
         Console.Write("Modèle : "); string modele = Console.ReadLine();
@@ -75,7 +76,7 @@ public class DbConnection
         Console.Write("Prix HT : "); decimal prix = decimal.Parse(Console.ReadLine());
         Console.Write("Couleur : "); string couleur = Console.ReadLine();
 
-        var voiture = new Car
+        Car voiture = new Car
         {
             Brand = marque,
             Model = modele,
@@ -84,11 +85,25 @@ public class DbConnection
             Color = couleur,
             Sold = false
         };
+        addCar(voiture);
+         
 
-        _dbContext.Cars.Add(voiture);
-        _dbContext.SaveChanges();
+    }
 
-        Console.WriteLine("Voiture ajoutée avec succès.");
+    public void addCar( Car voiture)
+    {
+         
+        bool isCarExist = _dbContext.Cars.Any(c => c.Model == voiture.Model && c.PriceHT == voiture.PriceHT && c.Brand == voiture.Brand && c.Year == voiture.Year && c.Color == voiture.Color);
+
+        if (!isCarExist){
+            _dbContext.Cars.Add(voiture);
+            _dbContext.SaveChanges();
+            Console.WriteLine("Voiture ajoutée avec succès.");
+
+        }else 
+        {
+            Console.WriteLine("Voiture existe deja.");
+        }
     }
 
     // lie client et voiture crée un ACHAT et sauvegarde
@@ -96,7 +111,8 @@ public class DbConnection
     {
         Console.Write("ID du client : "); Guid idClient = Guid.Parse(Console.ReadLine());
         Console.Write("ID de la voiture : "); Guid idVoiture = Guid.Parse(Console.ReadLine());
-
+            
+            
         var client = _dbContext.Clients.Find(idClient);
         var voiture = _dbContext.Cars.Find(idVoiture);
 
@@ -122,4 +138,6 @@ public class DbConnection
             Console.WriteLine("Erreur : client introuvable, voiture introuvable ou déjà vendue.");
         }
     }
+
+
 }

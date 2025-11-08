@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace projetFinal.Models;
+
 
 public class Client
 {
@@ -8,45 +8,45 @@ public class Client
     public Guid Id { get; set; } = new Guid();
 
     [Required] 
-    private string lastName;
+    private string _lastName;
     [Required] 
-    private string firstName;
+    private string _firstName;
     [Required] 
-    private DateTime birthDate;
+    private DateTime _birthDate;
     [Required] 
-    private string phoneNumber;
+    private string _phoneNumber;
     [Required] 
-    private string email;
+    private string _email;
 
     // Propriétés
     public string LastName
     {
-        get => lastName;
-        set => lastName = value ?? throw new ArgumentNullException(nameof(value));
+        get => _lastName;
+        set => _lastName = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     public string FirstName
     {
-        get => firstName;
-        set => firstName = value ?? throw new ArgumentNullException(nameof(value));
+        get => _firstName;
+        set => _firstName = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     public DateTime BirthDate
     {
-        get => birthDate;
-        set => birthDate = value;
+        get => _birthDate;
+        set => _birthDate = value;
     }
 
     public string PhoneNumber
     {
-        get => phoneNumber;
-        set => phoneNumber = value ?? throw new ArgumentNullException(nameof(value));
+        get => _phoneNumber;
+        set => _phoneNumber = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     public string Email
     {
-        get => email;
-        set => email = value ?? throw new ArgumentNullException(nameof(value));
+        get => _email;
+        set => _email = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     // Relations autres tables 
