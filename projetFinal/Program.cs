@@ -4,10 +4,12 @@ using System.Drawing;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using projetFinal.Data;
 using projetFinal.Models;
+using System.ComponentModel;
 
 #region lancement services
 
@@ -38,48 +40,7 @@ var dbConnection = scope.ServiceProvider.GetRequiredService<DbConnection>();
 
 db.Database.Migrate();
 
-String pathCar = $"/Data/voitures.csv";
-
-string[] lignesCar = File.ReadAllLines(pathCar);
-
-for (int i = 1; i < lignesCar.Length; i++) // On commence à 1 pour sauter l'en-tête
-{
-    string line = lignesCar[i];
-    string[] values = line.Split('/');
-
-    Car car= new Car
-    {
-        Brand = values[0],
-        Model = values[1],
-        Year =  int.Parse(values[2]), 
-        PriceHT = Convert.ToDecimal(values[3],CultureInfo.InvariantCulture),
-        Color = values[4],
-        Sold = Convert.ToBoolean(values[5])
-    };
-    
-    db.Cars.Add(car); 
-}
-db.SaveChanges();
-
-
-String pathClient = $"{pathProject}/Data/clients.csv"; //pathProject a modifié
-var lignesCustomer = File.ReadAllLines(pathClient);
-
-for (int i = 1; i < lignesCustomer.Length; i++) 
-{
-    string line = lignesCustomer[i];
-    string[] values = line.Split('%');
-
-    Client customer = new Client()
-    {
-        LastName = values[0],
-        FirstName = values[1],
-        BirthDate= Convert.ToDateTime(values[2]),
-        PhoneNumber = values[3],
-        Email = values[4]
-    };
-   db.Clients.Add(customer);
-} 
+dbConnection.loadCsv();
 
 DbConnection dbConnectionService = scope.ServiceProvider.GetRequiredService<DbConnection>();
 
@@ -96,7 +57,8 @@ do
     Console.WriteLine("3) Ajouter un client");
     Console.WriteLine("4) Ajouter une voiture");
     Console.WriteLine("5) Faire un achat de voiture");
-    Console.WriteLine("6) Fin");
+    Console.WriteLine("6) Réinitialise la base de donnée");
+    Console.WriteLine("7) Fin");
     Console.Write("Choix : ");
 
     int.TryParse(Console.ReadLine(), out choice);
@@ -111,7 +73,7 @@ do
             dbConnection.showCarBuy();
             break;
         case 3:
-            dbConnection.addClient();
+            dbConnection.userAddClient();
             break;
         case 4:
             dbConnection.userAddCar();
@@ -120,10 +82,15 @@ do
             dbConnection.FaireAchat();
             break;
         case 6:
+            dbConnection.resetBdd();
+            break;
+        case 7:
             Console.WriteLine("Fin du programme.");
             break;
     }
 
-} while (choice != 6);
+} while (choice != 7);
+
+
 
 #endregion
