@@ -17,4 +17,6 @@ Projet C# (+ Entity Framework et Postgre)
 3) Ajouter un client
 4) Ajouter une voiture
 5) Faire un achat de voiture
-6) Fin
+6) Réinitialise la base de donnée
+7) Fin
+
