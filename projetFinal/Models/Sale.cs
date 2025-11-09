@@ -2,7 +2,7 @@
 
 namespace projetFinal.Models;
 
-public class Achat
+public class Sale
 {
     [Key]
     public Guid Id { get; set; } = new Guid();
