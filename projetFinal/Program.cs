@@ -11,7 +11,7 @@ using projetFinal.Data;
 using projetFinal.Models;
 using System.ComponentModel;
 
-#region lancement services
+#region starting services
 
 
 var configuration = new ConfigurationBuilder()
@@ -45,7 +45,7 @@ dbConnection.loadCsv();
 DbConnection dbConnectionService = scope.ServiceProvider.GetRequiredService<DbConnection>();
 
 
-#region Menu principal
+#region Main Menu 
 
 int choice;
 do
@@ -70,7 +70,7 @@ do
             dbConnection.PrintCar();
             break;
         case 2:
-            dbConnection.showCarBuy();
+            dbConnection.displayCarSales();
             break;
         case 3:
             dbConnection.userAddClient();
@@ -79,7 +79,7 @@ do
             dbConnection.userAddCar();
             break;
         case 5:
-            dbConnection.FaireAchat();
+            dbConnection.Buy();
             break;
         case 6:
             dbConnection.resetBdd();

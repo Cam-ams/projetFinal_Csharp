@@ -9,7 +9,7 @@ public class AppDbContext : DbContext
     // Créations des tables pour la base de données sur pgAdmin
     public DbSet<Client> Clients { get; set; }
     public DbSet<Car> Cars { get; set; }
-    public DbSet<Achat> Achats { get; set; }
+    public DbSet<Sale> Achats { get; set; }
     public DbSet<Concession> Concessions { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }

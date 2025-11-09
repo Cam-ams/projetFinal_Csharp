@@ -2,7 +2,6 @@
 using projetFinal.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-
 namespace projetFinal.Data;
 
 public class DbConnection
@@ -19,9 +18,9 @@ public class DbConnection
     {
         Console.WriteLine("Liste des voitures :");
 
-        foreach (var c in _dbContext.Cars)
+        foreach (Car c in _dbContext.Cars)
         {
-            var infoClient = c.Sold && c.Client != null
+            string infoClient = c.Sold && c.Client != null
                 ? $" - Propriétaire : {c.Client.FirstName} {c.Client.LastName}"
                 : "";
 
@@ -30,16 +29,16 @@ public class DbConnection
     }
 
     // Affiche historique des achats dans ordre croissant des dates d'achat
-    public void showCarBuy()
+    public void displayCarSales()
     {
         Console.WriteLine("Historique des achats :");
-        var achats = _dbContext.Achats
+        List<Sale> achats = _dbContext.Achats
             .Include(a => a.Acheteur)
             .Include(a => a.VoitureVendue)
             .OrderBy(a => a.DateAchat)
             .ToList();
  
-        foreach (var a in achats)
+        foreach (Sale a in achats)
         {
             Console.WriteLine($"{a.DateAchat.ToShortDateString()} : {a.Acheteur.FirstName} {a.Acheteur.LastName} a acheté {a.VoitureVendue.Brand} {a.VoitureVendue.Model}");
         }
@@ -48,20 +47,20 @@ public class DbConnection
     // ajoute un client dans la base de données 
     public void userAddClient()
     {
-        Console.Write("Nom : "); string nom = Console.ReadLine();
-        Console.Write("Prénom : "); string prenom = Console.ReadLine();
+        Console.Write("Nom : "); string lastName = Console.ReadLine();
+        Console.Write("Prénom : "); string firstName = Console.ReadLine();
         Console.Write("Email : "); string email = Console.ReadLine();
         Console.Write("Date de naissance (au format année, mois, date) : ");
-        DateTime naissance = DateTime.SpecifyKind(DateTime.Parse(Console.ReadLine()), DateTimeKind.Utc);
-        Console.Write("Téléphone : "); string tel = Console.ReadLine();
+        DateTime birthDate = DateTime.SpecifyKind(DateTime.Parse(Console.ReadLine()), DateTimeKind.Utc);
+        Console.Write("Téléphone : "); string phone = Console.ReadLine();
 
         Client client = new Client
         {
-            LastName = nom,
-            FirstName = prenom,
+            LastName = lastName,
+            FirstName = firstName,
             Email = email,
-            BirthDate = naissance,
-            PhoneNumber = tel
+            BirthDate = birthDate,
+            PhoneNumber = phone
         };
         addClient(client);
     }
@@ -84,31 +83,31 @@ public class DbConnection
     // ajoute une voiture dans la base de données 
     public void userAddCar()
     {
-        Console.Write("Marque : "); string marque = Console.ReadLine();
-        Console.Write("Modèle : "); string modele = Console.ReadLine();
-        Console.Write("Année : "); int annee = int.Parse(Console.ReadLine());
-        Console.Write("Prix HT : "); decimal prix = decimal.Parse(Console.ReadLine());
-        Console.Write("Couleur : "); string couleur = Console.ReadLine();
+        Console.Write("Marque : "); string brand = Console.ReadLine();
+        Console.Write("Modèle : "); string model = Console.ReadLine();
+        Console.Write("Année : "); int year = int.Parse(Console.ReadLine());
+        Console.Write("Prix HT : "); decimal price = decimal.Parse(Console.ReadLine());
+        Console.Write("Couleur : "); string color = Console.ReadLine();
 
-        Car voiture = new Car
+        Car car = new Car
         {
-            Brand = marque,
-            Model = modele,
-            Year = annee,
-            PriceHT = prix,
-            Color = couleur,
+            Brand = brand,
+            Model = model,
+            Year = year,
+            PriceHT = price,
+            Color = color,
             Sold = false
         };
-        addCar(voiture);
+        addCar(car);
     }
 
-    public void addCar( Car voiture)
+    public void addCar(Car car)
     {
          
-        bool isCarExist = _dbContext.Cars.Any(c => c.Model == voiture.Model && c.PriceHT == voiture.PriceHT && c.Brand == voiture.Brand && c.Year == voiture.Year && c.Color == voiture.Color);
+        bool isCarExist = _dbContext.Cars.Any(c => c.Model == car.Model && c.PriceHT == car.PriceHT && c.Brand == car.Brand && c.Year == car.Year && c.Color == car.Color);
 
         if (!isCarExist){
-            _dbContext.Cars.Add(voiture);
+            _dbContext.Cars.Add(car);
             _dbContext.SaveChanges();
             Console.WriteLine("Voiture ajoutée avec succès.");
 
@@ -119,17 +118,16 @@ public class DbConnection
     }
 
     // lie client et voiture crée un ACHAT et sauvegarde
-    public void FaireAchat()
+    public void Buy()
     {
-        Console.Write("Nom du client : "); string NameClient = Console.ReadLine();
-        List<Client> matchedClients = _dbContext.Clients.Where(c => c.LastName.ToLower() == NameClient.ToLower()).ToList();
-       
+        Console.Write("Nom du client : "); string lastName = Console.ReadLine();
+        List<Client> matchedClients = _dbContext.Clients.Where(c => c.LastName.ToLower() == lastName.ToLower()).ToList();
         Client client; 
         
         if (matchedClients.Count == 0)
         {
             Console.WriteLine("Le client n'est pas trouvé");
-            FaireAchat();
+            Buy();
             return;
         }
         else if(matchedClients.Count > 1)
@@ -181,14 +179,14 @@ public class DbConnection
         
         car.Sold = true; 
         car.Client = client;
-        Achat achat = new Achat
+        Sale sale = new Sale
         {
             Acheteur = client,
             VoitureVendue = car,
             DateAchat = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
         };
         
-        _dbContext.Achats.Add(achat);
+        _dbContext.Achats.Add(sale);
         _dbContext.SaveChanges();
         
         Console.WriteLine("Achat effectué avec succès.");
@@ -200,11 +198,11 @@ public class DbConnection
 
         String pathCar = $"{projectRoot}/Data/voitures.csv";
 
-        string[] lignesCar = File.ReadAllLines(pathCar);
+        string[] linesCar = File.ReadAllLines(pathCar);
 
-        for (int i = 1; i < lignesCar.Length; i++) // On commence à 1 pour sauter l'en-tête
+        for (int i = 1; i < linesCar.Length; i++) // On commence à 1 pour sauter l'en-tête
         {
-            string line = lignesCar[i];
+            string line = linesCar[i];
             string[] values = line.Split('/');
 
             Car car= new Car
@@ -222,11 +220,11 @@ public class DbConnection
 
 
         String pathClient = $"{projectRoot}/Data/clients.csv"; 
-        var lignesCustomer = File.ReadAllLines(pathClient);
+        string[] linesCustomer = File.ReadAllLines(pathClient);
 
-        for (int i = 1; i < lignesCustomer.Length; i++) 
+        for (int i = 1; i < linesCustomer.Length; i++) 
         {
-            string line = lignesCustomer[i];
+            string line = linesCustomer[i];
             string[] values = line.Split('%');
 
             Client customer = new Client()
@@ -249,9 +247,5 @@ public class DbConnection
         _dbContext.SaveChanges();
        loadCsv();
         Console.WriteLine("La base donnée est réinitialisée");
-    }
-    
-    
-
-
+    } 
 }

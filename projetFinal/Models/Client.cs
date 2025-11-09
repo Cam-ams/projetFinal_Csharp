@@ -51,5 +51,5 @@ public class Client
 
     // Relations autres tables 
     public List<Car> Cars { get; set; } = new();
-    public List<Achat> Achats { get; set; } = new(); 
+    public List<Sale> Sales { get; set; } = new(); 
 }
